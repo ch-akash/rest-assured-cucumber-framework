@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Cucumber Tests for Restful Booker">
+    <test verbose="2" name="Cucumber Scenarios in parallel">
+        <classes>
+            <class name="runner.CucumberTests">
+            </class>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="listeners.AnnotationTransformer"/>
+    </listeners>
+</suite>
