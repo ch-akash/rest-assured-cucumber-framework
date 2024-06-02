@@ -12,9 +12,10 @@ import java.util.Map;
 
 public class UpdateBookingApiStepDefs {
 
-    private UpdateBookingApi updateBookingApi;
+    private final UpdateBookingApi updateBookingApi;
     private final SharedStepContext sharedStepContext;
     private Map<String, Object> requestPayload;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
 
     public UpdateBookingApiStepDefs(SharedStepContext sharedStepContext) {
         this.sharedStepContext = sharedStepContext;
@@ -23,11 +24,8 @@ public class UpdateBookingApiStepDefs {
 
     @When("we prepare request for update booking API")
     public void wePrepareRequestForUpdateBookingAPI(Map<String, String> requestMap) {
-        var dateFormatter = DateTimeFormatter.ISO_DATE;
-        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestMap.get("checkInPlusDays")),
-                dateFormatter);
-        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestMap.get("checkoutPlusDays")),
-                dateFormatter);
+        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestMap.get("checkInPlusDays")), this.dateFormatter);
+        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestMap.get("checkoutPlusDays")), this.dateFormatter);
         var totalPrice = Integer.parseInt(requestMap.get("totalPrice"));
         this.requestPayload = ApiRequestHelper.getCreateBookingApiRequest(
                 requestMap.get("firstName"),

@@ -18,10 +18,11 @@ import static org.hamcrest.Matchers.is;
 
 public class CreateBookingStepDefs {
 
-    private CreateBookingApi createBookingApi;
+    private final CreateBookingApi createBookingApi;
     private final SharedStepContext sharedStepContext;
     private Map<String, Object> requestPayload;
     private Response createBookingApiResponse;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
 
     public CreateBookingStepDefs(SharedStepContext sharedStepContext) {
         this.sharedStepContext = sharedStepContext;
@@ -31,11 +32,8 @@ public class CreateBookingStepDefs {
     @Given("we have a valid request for create booking with following params")
     public void weHaveAValidRequestForCreateBookingWithFollowingParams(List<Map<String, String>> requestDataList) {
         var requestDataMap = requestDataList.getFirst();
-        var dateFormatter = DateTimeFormatter.ISO_DATE;
-        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkInPlusDays")),
-                dateFormatter);
-        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkoutPlusDays")),
-                dateFormatter);
+        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkInPlusDays")), this.dateFormatter);
+        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkoutPlusDays")), this.dateFormatter);
 
         requestPayload = ApiRequestHelper.getCreateBookingApiRequest(
                 requestDataMap.get("firstName"),
@@ -47,19 +45,16 @@ public class CreateBookingStepDefs {
     }
 
     @Given("we have a valid request for create booking with following params as Map and total price {int}")
-    public void weHaveAValidRequestForCreateBookingWithFollowingParamsAsMap(int totalPrice, Map<String, String> requestDataList) {
-        var dateFormatter = DateTimeFormatter.ISO_DATE;
-        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataList.get("checkInPlusDays")),
-                dateFormatter);
-        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataList.get("checkoutPlusDays")),
-                dateFormatter);
+    public void weHaveAValidRequestForCreateBookingWithFollowingParamsAsMap(int totalPrice, Map<String, String> requestDataMap) {
+        var checkInDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkInPlusDays")), this.dateFormatter);
+        var checkOutDate = TestDataHelper.getFutureDate(Integer.parseInt(requestDataMap.get("checkoutPlusDays")), this.dateFormatter);
 
         requestPayload = ApiRequestHelper.getCreateBookingApiRequest(
-                requestDataList.get("firstName"),
-                requestDataList.get("lastName"),
+                requestDataMap.get("firstName"),
+                requestDataMap.get("lastName"),
                 totalPrice,
-                Boolean.parseBoolean(requestDataList.get("depositPaid")),
-                requestDataList.get("additionalNeeds"),
+                Boolean.parseBoolean(requestDataMap.get("depositPaid")),
+                requestDataMap.get("additionalNeeds"),
                 checkInDate, checkOutDate);
 
         this.sharedStepContext.createBookingApiRequest = requestPayload;

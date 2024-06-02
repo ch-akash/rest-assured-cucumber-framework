@@ -7,7 +7,7 @@ Feature: Update an existing booking
     Given we have a valid request for create booking with following params as Map and total price 999
       | firstName        | John    |
       | lastName         | Simpson |
-      | depositPid       | false   |
+      | depositPaid      | false   |
       | additionalNeeds  | Soda    |
       | checkInPlusDays  | 20      |
       | checkoutPlusDays | 25      |
@@ -19,7 +19,7 @@ Feature: Update an existing booking
     And we prepare request for update booking API
       | firstName        | John          |
       | lastName         | Simpson       |
-      | depositPid       | false         |
+      | depositPaid      | false         |
       | additionalNeeds  | Mineral Water |
       | checkInPlusDays  | 22            |
       | checkoutPlusDays | 27            |
