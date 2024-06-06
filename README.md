@@ -35,7 +35,8 @@ You need to have the following software installed on your machine:
 
 - [Java 21](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - [Maven 3.9.5](https://maven.apache.org/download.cgi)
-- [Allure 2.24.0](https://allurereport.org/docs/install/)
+- [Allure TestNG 2.24.0](https://allurereport.org/docs/testng/)
+- [Allure REST Assured](https://allurereport.org/docs/restassured/)
 
 ### Install dependencies
 
